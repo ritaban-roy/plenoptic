@@ -4,7 +4,6 @@ import numpy as np
 from scipy.interpolate import interpn
 from scipy.ndimage import gaussian_filter, uniform_filter
 from scipy.signal import correlate2d
-from skimage.morphology import erosion, dilation, closing
 import gc
 from tqdm import tqdm
 
@@ -86,7 +85,7 @@ def depth_from_focus():
     I_allfocus = np.sum(w_sharp_exp * focal_stack, axis=-1)/np.sum(w_sharp, axis=-1, keepdims=True)
     I_allfocus = np.clip(I_allfocus, a_min=0, a_max=1)
     io.imsave(f'../data/allfocus_image_s1_{s1}_s2_{s2}.png', (I_allfocus*255).astype(np.uint8))
-    depths = np.expand_dims(np.arange(-0.4, 1.8, 0.1), axis=(0,1))
+    depths = np.expand_dims(np.arange(-0.4, 1.8, 0.2), axis=(0,1))
     #print(w_sharp.shape, depths.shape)
     
     I_depth = np.sum(w_sharp*depths.squeeze(), axis=-1)/np.sum(w_sharp, axis=-1)
@@ -281,6 +280,7 @@ def run_q1_focal():
 
 
 if __name__ == '__main__':
-    run_q1_focal()
-    #run_q3()
+    #run_q1_focal()
+    #run_q1_confocal()
+    run_q3()
     
